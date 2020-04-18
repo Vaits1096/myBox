@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("My Box app. Lets go!")
+    return render(request, "boxApp/index.html")
 
 def ejemplo(request):
 	return HttpResponse("ejemplo")
