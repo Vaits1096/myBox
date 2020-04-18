@@ -25,12 +25,13 @@ SECRET_KEY = 'x3)ep*a9bf85@=k@3(&6bld%+xe9v#+d6mxq8innkgjid-6cx9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'boxApp.apps.BoxappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
