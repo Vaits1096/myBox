@@ -4,3 +4,8 @@ from django.db import models
 
 
 
+class this_isatest():
+    this='esto es una prueba para git'
+
+
+
