@@ -48,4 +48,5 @@ def CreateExercise(request):
     else:
         template_name = 'boxApp/exercisesForm.html'
         register_form = ExerciseForm()
-        return render(request, 'boxApp/exercisesForm.html', {'register_form': register_form})
+        context = {'obj': request.user, 'register_form': register_form}
+        return render(request, 'boxApp/exercisesForm.html', context)

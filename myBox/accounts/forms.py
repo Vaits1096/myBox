@@ -41,8 +41,30 @@ class UserAdminCreationForm(forms.ModelForm):
     A form for creating new users. Includes all the required
     fields, plus a repeated password.
     """
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    email = forms.CharField(required=False, 
+                            widget=forms.TextInput(
+                                attrs={
+                                    "placeholder": "email address",
+                                    "class": "new-class-name two",
+                                }
+                            )
+                        )
+
+    password1 = forms.CharField(widget=forms.PasswordInput(
+                                    attrs={
+                                        "placeholder": "password",
+                                        "class": "new-class-name two",
+                                    }
+                                )
+                            )
+
+    password2 = forms.CharField(widget=forms.PasswordInput(
+                                    attrs={
+                                        "placeholder": "confirm password",
+                                        "class": "new-class-name two",
+                                    }
+                                )
+                            )
 
     class Meta:
         model = User

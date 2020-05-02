@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'myBox.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myBox',
+        'NAME': 'mybox',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
