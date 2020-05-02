@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 import datetime
+
+from django.utils import timezone
 from django.utils.timezone import now
 
 
@@ -16,6 +18,7 @@ class Training(models.Model):
     date = models.DateField(u'Day of the event', help_text=u'Day of the event', null=True)
     start_time = models.TimeField(u'Starting time', help_text=u'Starting time', null=True)
     end_time = models.TimeField(u'Final time', help_text=u'Final time', null=True)
+    #Add trainer foreign key
     # Attribute to save Exercise ids
     ex_list = ArrayField(models.IntegerField(), null=True)
     # Think about saving the reps and time of each exercise
@@ -92,12 +95,16 @@ class Training(models.Model):
 
 class Exercise(models.Model):
     name = models.CharField(max_length=50)
-    text = models.TextField(max_length=500, blank=True)
+    text = models.CharField(max_length=500, blank=True)
     difficulty = models.CharField(max_length=100)
-    img_url = models.CharField(max_length=100)
-    video_url = models.CharField(max_length=100)
-    date_published = models.DateTimeField('Date published', null=True)
+    img = models.ImageField(upload_to='images/',blank=True)
+    video_url = models.CharField(max_length=100,blank=True)
+    #add trainer who added it
+    last_modified = models.DateTimeField('Date modified', default=timezone.now)
+    date_published = models.DateTimeField('Date published', default=timezone.now)
 
+    def __str__(self):
+        return self.name
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
