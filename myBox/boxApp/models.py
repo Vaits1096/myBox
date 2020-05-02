@@ -100,7 +100,7 @@ class Exercise(models.Model):
     img = models.ImageField(upload_to='images/',blank=True)
     video_url = models.CharField(max_length=100,blank=True)
     #add trainer who added it
-    last_modified = models.DateTimeField('Date modified', default=timezone.now)
+    #last_modified = models.DateTimeField('Date modified', default=timezone.now)
     date_published = models.DateTimeField('Date published', default=timezone.now)
 
     def __str__(self):
