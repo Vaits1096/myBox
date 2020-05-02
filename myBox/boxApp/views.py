@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import RegisterForm
 
 def index(request):
     if request.method == 'POST':
