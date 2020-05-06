@@ -1,0 +1,7 @@
+{% extends 'boxApp/base.html' %}
+
+{% block content %}
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.last_name }}</p>
+    <p>{{ object.user.email }}</p>
+{% endblock %}

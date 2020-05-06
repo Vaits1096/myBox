@@ -1,21 +1,37 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm, UserAdminCreationForm
+from boxApp.models import Coach, Athlete, Box
 
 # Create your views here.
 from django.shortcuts import render, redirect
 
 def index(request):
-    return render(request, "accounts/index.html")
+    context = {}
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            profile = get_object_or_404(Coach, user = request.user)
+        else:
+            profile = get_object_or_404(Athlete, user = request.user)
+        context['user'] = profile
+    return render(request, "accounts/index.html", context)
 
 def welcome(request):
     # Si estamos identificados devolvemos la portada
+    user = None
+    box = None
     if request.user.is_authenticated:
-        return render(request, "boxApp/index.html", { 'obj': request.user})
+        if request.user.is_admin:
+            profile = get_object_or_404(Coach, user = request.user)
+        else:
+            profile = get_object_or_404(Athlete, user = request.user)
+        if profile is not None:
+            box = profile.box
+            return render(request, "boxApp/index.html", { 'user': request.user, 'profile': profile, 'box': box})
     # En otro caso redireccionamos al login
     return redirect('../accounts/login')
 
@@ -34,10 +50,19 @@ def register(request):
             # Creamos la nueva cuenta de usuario
             user = form.save()
 
-            # Si el usuario se crea correctamente 
-            if user is not None:
+            # Obtenemos el entrenador que va a realizar el alta 
+            coach = Coach.objects.filter(user = request.user)
+
+            # Obtenemos al box que pertenece
+            box = coach.box
+
+            # Creamos el atleta
+            ath = Athlete(user, box, "", "", "")
+
+            # Si el usuario y el atleta se crean correctamente 
+            if user is not None and ath is not None:
                 # Hacemos el login manualmente
-                do_login(request, user)
+                # do_login(request, user)
                 # Y le redireccionamos a la portada
                 return redirect('../../dashboard')
 
@@ -64,7 +89,7 @@ def login(request):
                 # Hacemos el login manualmente
                 do_login(request, user)
                 # Y le redireccionamos a la portada
-                return redirect('../../dashboard')
+                return redirect('../../box')
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "accounts/login.html", {'form': form})
@@ -73,4 +98,4 @@ def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('../../dashboard')
+    return redirect('../../box')

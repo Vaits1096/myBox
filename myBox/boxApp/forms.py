@@ -1,5 +1,5 @@
 from django import forms
-from .models import Exercise
+from .models import Exercise, Athlete
 
 
 class ExerciseForm(forms.ModelForm):
@@ -17,3 +17,12 @@ class ExerciseForm(forms.ModelForm):
             'placeholder': 'Dificultad',
         })
         }
+
+
+class create_athlete_form(forms.Form):
+    email       = forms.CharField(label='', 
+                                widget=forms.TextInput(attrs={"placeholder": "Email del atleta"}))
+    name        = forms.CharField(label='', 
+                                widget=forms.TextInput(attrs={"placeholder": "Nombre del atleta"}))
+    last_name   = forms.CharField(label='', 
+                                widget=forms.TextInput(attrs={"placeholder": "Apellido del atleta"}))
