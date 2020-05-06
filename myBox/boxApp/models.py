@@ -112,5 +112,4 @@ class Booking(models.Model):
     date_published = models.DateTimeField(default=now, editable=False)
 
     def remove_booking(self):
-
         Booking.objects.remove(id=self.id)

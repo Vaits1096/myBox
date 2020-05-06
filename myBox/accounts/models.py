@@ -97,18 +97,3 @@ class User(AbstractBaseUser):
     def is_active(self):
         "Is the user active?"
         return self.active
-
-
-class Coach(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_name = models.CharField(default=None, max_length=50)
-    name = models.CharField(default=None, max_length=50)
-    last_name = models.CharField(default=None, max_length=50)
-    birthdate = models.DateField(default=datetime.date.today, auto_now=False, auto_now_add=False)
-
-class Athlete(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_name = models.CharField(default=None, max_length=50)
-    name = models.CharField(default=None, max_length=50)
-    last_name = models.CharField(default=None, max_length=50)
-    birthdate = models.DateField(default=datetime.date.today, auto_now=False, auto_now_add=False)
